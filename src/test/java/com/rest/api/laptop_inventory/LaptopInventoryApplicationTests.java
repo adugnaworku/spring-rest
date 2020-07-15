@@ -1,10 +1,10 @@
-package com.rest.api.restvasedappdemo;
+package com.rest.api.laptop_inventory;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RestVasedAppDemoApplicationTests {
+class LaptopInventoryApplicationTests {
 
 	@Test
 	void contextLoads() {

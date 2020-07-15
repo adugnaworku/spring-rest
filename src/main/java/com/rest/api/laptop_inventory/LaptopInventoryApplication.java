@@ -1,13 +1,13 @@
-package com.rest.api.restvasedappdemo;
+package com.rest.api.laptop_inventory;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RestVasedAppDemoApplication {
+public class LaptopInventoryApplication {
 
 	public static void main(String args[]) {
-		SpringApplication.run(RestVasedAppDemoApplication.class, args);
+		SpringApplication.run(LaptopInventoryApplication.class, args);
 	}
 
 }

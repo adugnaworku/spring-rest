@@ -1,12 +1,9 @@
-package com.rest.api.restvasedappdemo.web;
+package com.rest.api.laptop_inventory.web;
 
-import com.rest.api.restvasedappdemo.model.LaptopBrand;
-import com.rest.api.restvasedappdemo.service.LaptopBrandService;
-import com.rest.api.restvasedappdemo.service.LaptopService;
-import org.aspectj.lang.annotation.Before;
+import com.rest.api.laptop_inventory.model.LaptopBrand;
+import com.rest.api.laptop_inventory.service.LaptopBrandService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -50,10 +46,11 @@ public class LaptopControllerTest {
 
     @Test
     public void shouldReturnEmptyWhenLaptopBrandIsNotDefined() throws Exception {
-        when(mockLaptopBrandService.getAllLaptopBrands()).thenReturn(Optional.empty());
+        when(mockLaptopBrandService.getAllLaptopBrands())
+                .thenReturn(Optional.empty());
 
         mockMvc.perform(MockMvcRequestBuilders
-            .get("/api/laptop/getall")
+            .get("/api/laptop-brands/getall")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$",is(empty())));
@@ -61,10 +58,11 @@ public class LaptopControllerTest {
 
     @Test
     public void shouldReturnListOfLaptopBrands() throws Exception {
-        when(mockLaptopBrandService.getAllLaptopBrands()).thenReturn(Optional.ofNullable(laptopBrandList));
+        when(mockLaptopBrandService.getAllLaptopBrands())
+                .thenReturn(Optional.ofNullable(laptopBrandList));
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/laptop/getall")
+                .get("/api/laptop-brands/getall")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id", is(1)))
@@ -74,10 +72,11 @@ public class LaptopControllerTest {
 
     @Test
     public void shouldReturnSingleLaptopBrandById() throws Exception {
-        when(mockLaptopBrandService.getById(1L)).thenReturn(Optional.ofNullable(laptopBrand));
+        when(mockLaptopBrandService.getById(1L))
+                .thenReturn(Optional.ofNullable(laptopBrand));
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/laptop/get/1")
+                .get("/api/laptop-brands/1")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
@@ -89,9 +88,43 @@ public class LaptopControllerTest {
         when(mockLaptopBrandService.getById(1L)).thenReturn(Optional.empty());
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/laptop/get/1")
+                .get("/api/laptop-brands/get/1")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message", is("Laptop brand not found with Id:1")));
+                .andExpect(jsonPath("$.message",
+                        is("Laptop brand not found with Id:1")));
+    }
+
+    @Test
+    public void shouldSaveLaptopBrand() throws Exception {
+        when(mockLaptopBrandService
+                .save(LaptopBrand
+                        .builder()
+                        .name("HP")
+                        .build()))
+                .thenReturn(laptopBrand);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/laptop-brands/")
+                .content("{ \"name\" : \"HP\" }")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name", is("HP")));
+    }
+
+    @Test
+    public void shouldUpdateLaptopBrand() throws Exception {
+        when(mockLaptopBrandService
+                .update(1L, LaptopBrand.builder().name("HP").build()))
+                .thenReturn(laptopBrand);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .put("/api/laptop-brands/1")
+                .content("{ \"name\" : \"HP\" }")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("HP")));
     }
 }

@@ -1,4 +1,4 @@
-package com.rest.api.restvasedappdemo.config;
+package com.rest.api.laptop_inventory.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

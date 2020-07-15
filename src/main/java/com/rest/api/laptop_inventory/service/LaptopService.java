@@ -1,9 +1,8 @@
-package com.rest.api.restvasedappdemo.service;
+package com.rest.api.laptop_inventory.service;
 
-import com.rest.api.restvasedappdemo.model.LaptopBrand;
+import com.rest.api.laptop_inventory.model.LaptopBrand;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,8 +1,8 @@
-package com.rest.api.restvasedappdemo.controller;
+package com.rest.api.laptop_inventory.controller;
 
-import com.rest.api.restvasedappdemo.exception.LaptopInventoryException;
-import com.rest.api.restvasedappdemo.model.LaptopBrand;
-import com.rest.api.restvasedappdemo.service.LaptopBrandService;
+import com.rest.api.laptop_inventory.exception.LaptopInventoryException;
+import com.rest.api.laptop_inventory.model.LaptopBrand;
+import com.rest.api.laptop_inventory.service.LaptopBrandService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class LaptopController {
                 .orElse(Collections.emptyList()));
     }
 
-    @GetMapping("get/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<LaptopBrand> getLaptopBrandById(@PathVariable Long id) {
         return ResponseEntity
                 .ok()
@@ -40,14 +40,20 @@ public class LaptopController {
     @PostMapping("/")
     public ResponseEntity<LaptopBrand> save(@RequestBody LaptopBrand laptopBrand) {
         LaptopBrand savedLaptopBrand = laptopBrandService.save(laptopBrand);
-        return new ResponseEntity<LaptopBrand>(savedLaptopBrand, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedLaptopBrand);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody LaptopBrand laptopBrand) {
+    public ResponseEntity<LaptopBrand> update(@PathVariable Long id,
+                                              @RequestBody LaptopBrand laptopBrand) {
         LaptopBrand savedLaptopBrand = laptopBrandService.update(id, laptopBrand);
-        return new ResponseEntity<LaptopBrand>(savedLaptopBrand, HttpStatus.CREATED);
+        return new ResponseEntity<LaptopBrand>(savedLaptopBrand, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+         laptopBrandService.delete(id);
+         return ResponseEntity.ok().body("Laptop brand with deleted with id: "+id);
+    }
 
 }
