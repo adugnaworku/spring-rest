@@ -30,7 +30,7 @@ public class Swagger {
 
     private ApiInfo getApiInfo() {
         return new ApiInfoBuilder()
-                .title("Contact API")
+                .title("Laptop inventory API")
                 .version("1.0")
                 .description("API for managing Contact.")
                 .contact(new Contact("Adugna worku",
