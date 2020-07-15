@@ -1,0 +1,1 @@
+insert into USER (`ID`, `CREATED_DATE`, `EMAIL`, `ENABLED`, `PASSWORD`, `USER_NAME`) values ('2','2020-01-01', 'test@email.com', 'true', '$2a$10$zGgCZE8/Zl7oI90Ytao5p.4A0SbrFOTWTw62GtcYKP2ILZXACPOC.','user2')

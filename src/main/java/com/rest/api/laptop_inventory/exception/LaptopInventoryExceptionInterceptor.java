@@ -3,6 +3,7 @@ package com.rest.api.laptop_inventory.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -18,11 +19,19 @@ public class LaptopInventoryExceptionInterceptor extends ResponseEntityException
     public static final String MESSAGE = "message";
     public static final String TIMESTAMP = "timestamp";
 
-    @ExceptionHandler(value = {LaptopInventoryException.class})
+    public String exceptionMessage;
+
+    @ExceptionHandler(value = {LaptopInventoryException.class, BadCredentialsException.class})
     public final ResponseEntity  handleResourceNotFoundError(RuntimeException ex) {
 
+        exceptionMessage = ex.getMessage();
+
+        if(ex instanceof BadCredentialsException ){
+            exceptionMessage = "Invalid user name and/or password";
+        }
+
         Map<String, Object> errorMap = new LinkedHashMap() {{
-            put(MESSAGE, ex.getMessage());
+            put(MESSAGE, exceptionMessage);
             put(TIMESTAMP, Instant.now());
         }};
 
