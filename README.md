@@ -1,11 +1,11 @@
-#Demo Rest APIs
+# Demo Rest APIs
 
 This application is a tech stack demonestrator with a very limited CRUD operation for managing a hypothetical laptop inventory
 ## Prerequisites
 * Java 1.8 
 * Gradle 5.5.1+
 
-#Quick Start
+# Quick Start
 1.Clone the repository to you local env
  ```shell
  git clone https://github.com/adugnaworku/spring-rest.git
@@ -31,7 +31,7 @@ any request in `laptop-controller` end points by clicking a lock key icon.
     
 6.Actuator end-point is found under `/actuator`. Authentication not required to access actuator.
 
-#Remaing
+# Remaing
 
 1. Method `@PreAuthorize` resource authorization
 2. `flyway` data migration
